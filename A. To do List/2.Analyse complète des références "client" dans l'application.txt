@@ -1,0 +1,32 @@
+Analyse complète des références "client" dans l'application
+🎯 1. DANS SUPABASE
+✅ Utilisation active de "client"
+users.users_role : Valeur par défaut 'client' (contrainte users_users_role_check : admin|client)
+users.users_interface_par_defaut : Valeur par défaut 'client_espace'
+🔧 Architecture métier "client"
+client_id : UUID généré dans toutes les tables métier (reseau, agence_independante, etc.)
+client_type : Catégorise le type de client ('reseau', 'agence_independante', 'reseau_agence')
+*_espace_client : Booléens d'activation de l'espace client par entité
+🎯 2. DANS L'APPLICATION
+❌ "client" OBSOLÈTE dans les hooks stratégiques
+useCurrentUser : Récupère users_role mais ne l'utilise pas
+useMultiTenant : Ignore complètement users_role = 'client'
+Redirection : Basée uniquement sur roleSysteme et utilisateurTypeCompte
+🔍 Références restantes
+Interface React : client pour Supabase client, QueryClient
+Documentation : Références historiques dans les bilans
+Route : /espace-client définie mais logique de redirection différente
+🚨 CONCLUSION STRATÉGIQUE
+1. users_role = 'client' est devenu OBSOLÈTE
+
+Remplacé par la logique utilisateurTypeCompte dans useMultiTenant
+La contrainte users_users_role_check peut être supprimée
+2. users_interface_par_defaut = 'client_espace' est OBSOLÈTE
+
+Ignoré par useMultiTenant.getPostLoginRoute()
+La contrainte users_users_interface_par_defaut_check peut être supprimée
+3. Architecture "client" métier reste VALIDE
+
+client_id, client_type, *_espace_client sont utilisés activement
+Fait partie du modèle de données business
+Recommandation : Nettoyer les contraintes obsolètes sur users_role et users_interface_par_defaut.
