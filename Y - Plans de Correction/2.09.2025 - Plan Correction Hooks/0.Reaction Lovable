@@ -1,0 +1,50 @@
+Bonjour
+Tu es un expert en Ia no code et intégration supabese.
+Tu m 'accompagnes depuis hier dans la mise à jour de mes formulaires de création et de mise  jour de compte.
+
+1/ En 1er, je te demande de prendre note de la stratégie de mon application
+et de lire les fichiers du dossier : public/1. Documents Stratégiques
+2/ En 2ème, je te demande de prendre note des tables de mon application 
+et de lire tous les fichierts du dossier : public/2. Etats des Tables
+3/ En 3ème, tu poursuivras ton analyse de Supabase, de toutes les tables et fonctions.
+4/ En 4ème, tu analyseras tous nos Hooks du dossier : src/components/HOOKS-STRATEGIQUE
+
+Une fois cette analyse faite, nous travaillons sur un espace qui me permet de créer et de mettre à jour des comptes utilisateurs.
+Ce ne sont pas de simples formulaires CRUD ce sont mes formulaires de gestion de mes clients.
+En effet, cette application est en développement, n est pas en ligne et n'a pas de clients et il n est pas prévu pour l instant de permettre aux personnes de créer des comptes directement sur mon site.
+Tout passera par moi. Cet espace permettra de créer des comptes suite à des demandes ou des contacts de prospects et de mettre à jour des dossiers clients car souvent ils n aiment pas le faire eux-memes
+
+Au départ, avant de nous connecter à Supabase, nous avions fait de simples formulaires.
+Hier, ensemble, nous avons changé de stratégie. Nous avons créé un dossier par formulaire.
+La structre est simple :
+1- j'ai une page accueil avec une structure graphique simple avec 2 boutons
+-> 1 bouton me demandant si c'est une création 
+-> 1 bouton me démandant si c'est une mise à jour
+2- j'ai une page creation qui permet de faire la création avec les infos essentielles uniquement 
+et j ai dans le dossier un Hook création pour faire la création dans supabase sur les tables users, utilisateurs, organisations et la table concernée.
+3- J'ai une page gestion qui permet de faire les mises à jour d'un compte déjà créé : informations générales, connexions etc
+et j ai dans le dossier un Hook gestion pour faire la mise à jour dans supabase sur les tables users, utilisateurs, organisations et la table concernée. 
+Le dossier est celui-ci : 
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs
+Nous avons travaillé ensemble sur un dossier test.
+Il est ici : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/0.Graphisme
+tu as rédigé un Read me pour te rémémorer les process
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/0.Graphisme/ReadMe.md
+
+Autres, infos nous devons respecter la meme structure graphique pour tous les formulaires que nous allons faire
+- ils sont dans le dossier : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/5-Graphisme
+les elemetns de formulaires : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/5-Graphisme/1.GraphFormulaires
+des elements spécifiques comme : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/5-Graphisme/6.GraphIntegConnexion
+
+Notre travail aujourd'hui va etre de créer les formulaires avec cette structure imposée
+pour les dossiers 
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau
+jusqu'à 
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/8.AgenceIndependanteCollaborateur
+
+POur l'instant ces dossiers contiennent des fichiers vides pour accueillir les codes, seules le fichier Accueil est en place actuellemetn
+les autres fichiers vont etre à programmer
+
+Je te demande de prendre note de toutes ces consignes et pn va commencer.
+
+
