@@ -31,6 +31,9 @@ Il est ici : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formu
 tu as rédigé un Read me pour te rémémorer les process
 src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/0.Graphisme/ReadMe.md
 
+Voila le process
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/0.Graphisme/ProcessaSuivre.md
+
 Autres, infos nous devons respecter la meme structure graphique pour tous les formulaires que nous allons faire
 - ils sont dans le dossier : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/5-Graphisme
 les elemetns de formulaires : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/5-Graphisme/1.GraphFormulaires
