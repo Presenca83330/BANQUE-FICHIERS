@@ -1,0 +1,143 @@
+Vue d’ensemble de la structure à corriger / organiser
+1. Niveaux & responsabilités
+
+Supabase Auth (auth.users)
+→ comptes techniques (login/password/email).
+
+Table users (miroir système)
+→ rattache chaque compte Auth à une organisation et définit son rôle système (admin_presenca ou NULL).
+
+Table utilisateurs (profil métier enrichi)
+→ définit le type de compte (reseau, reseau_direction, agence_independante, …), son statut, et rattachement organisationnel.
+
+Table organisations
+→ pivot multi-tenant (réseau ou agence indépendante).
+
+Tables business (reseau, reseau_direction, reseau_agence, …)
+→ stockent les infos propres aux structures.
+
+👉 Règle d’or :
+
+users.users_role_systeme = réservé aux admins PRESENCA.
+
+utilisateurs.utilisateur_type_compte = tous les rôles clients (reseau, agence…).
+
+2. Fichiers côté Application (Lovable)
+🗂️ /integrations/supabase/client.ts
+
+Doit exposer 2 clients distincts :
+
+supabase (anon key) → utilisé par 99 % des hooks.
+
+supabaseAdmin (service role key) → utilisé seulement dans useReseauCreation (et futurs hooks de création).
+
+🗂️ Hooks Stratégiques
+
+useAuth → inchangé, reste branché sur supabase (anon).
+
+useCurrentUser → lit users + utilisateurs. Pas besoin de correction.
+
+useMultiTenant → redirections correctes.
+
+useSupabaseOperations → reste sur supabase (anon).
+
+🗂️ Hooks de création (Admin Presenca)
+
+useReseauCreation.ts
+
+Actuellement buggué car utilise supabase (anon).
+
+À corriger pour :
+
+Créer un Auth User avec supabaseAdmin.auth.admin.createUser.
+
+Appeler la fonction SQL create_reseau_compte_complet(p_auth_uid) pour créer le reste.
+
+Retourner l’email + mot de passe pour SuccessAccountInfo.
+
+⚠️ Même correction à prévoir pour futurs hooks (useAgenceIndependanteCreation, useCollaborateurCreation, etc.).
+
+🗂️ Formulaires
+
+FormReseauCreation.tsx → OK, juste prévoir validations “unicité email + SIRET”.
+
+SuccessAccountInfo.tsx → OK, garde l’affichage du mdp temporaire.
+
+3. Côté Supabase (SQL & Policies)
+✅ À garder
+
+Tables auth.users, users, utilisateurs, organisations.
+
+RLS basées sur organisation_id.
+
+Fonctions : is_admin_presenca(), get_user_organisation_id().
+
+⚠️ À corriger
+
+Enum / contraintes
+
+users_role_systeme → doit rester limité à 'admin_presenca' ou NULL.
+
+utilisateur_type_compte → doit contenir reseau, reseau_direction, reseau_agence, etc. (mais pas admin_presenca).
+
+Trigger sync_users_utilisateurs()
+
+Actuellement crée une boucle infinie.
+
+Soit à désactiver, soit à simplifier pour éviter la double synchro (repose plutôt sur fonctions SQL de création complètes).
+
+Fonction SQL create_reseau_compte_complet
+
+Actuelle version est fausse (elle met "reseau" dans users_role_systeme).
+
+À corriger en :
+
+users_role_systeme = NULL (car ce n’est pas un admin).
+
+utilisateur_type_compte = 'reseau', utilisateur_statut = 'actif'.
+
+Attendre un vrai p_auth_uid venant de auth.users (créé par le hook avec supabaseAdmin).
+
+Procédures futures à dupliquer
+
+create_agence_independante_compte_complet().
+
+create_collaborateur_compte_complet().
+
+Toutes doivent suivre la même logique.
+
+4. Workflow idéal de création d’un compte réseau
+
+FormReseauCreation.tsx → admin remplit le form.
+
+useReseauCreation.ts →
+
+Génère un mdp temporaire.
+
+Appelle supabaseAdmin.auth.admin.createUser.
+
+Passe l’authUser.id à la fonction SQL create_reseau_compte_complet().
+
+Retourne email + mdp.
+
+SuccessAccountInfo.tsx → affiche les infos à l’admin.
+
+Utilisateur final → se connecte avec email + mdp, obligé de changer son mot de passe.
+
+🎯 Synthèse
+
+App côté Lovable
+
+client.ts doit gérer 2 clients (supabase, supabaseAdmin).
+
+useReseauCreation.ts doit utiliser supabaseAdmin pour Auth + RPC pour cascade SQL.
+
+FormReseauCreation et SuccessAccountInfo → OK (petites validations à renforcer).
+
+Côté Supabase
+
+Corriger l’enum / contrainte users_role_systeme.
+
+Réécrire create_reseau_compte_complet() sans mélanger rôle système & rôle métier.
+
+Désactiver / corriger le trigger de synchro.
