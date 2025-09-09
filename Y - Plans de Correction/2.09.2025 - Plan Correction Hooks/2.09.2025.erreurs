@@ -1,0 +1,69 @@
+ANALYSE DU FICHIER DETAIL-ETAPES.md
+Après lecture complète, je vois que ce fichier contient 4 étapes de développement avec le code de l'Edge Function create-reseau-admin.
+
+PROBLÈME IDENTIFIÉ :
+Le code dans DETAIL-ETAPES.md montre que l'Edge Function utilise une structure de réponse différente de ce que le hook attend :
+
+Edge Function retourne :
+
+return new Response(
+  JSON.stringify({
+    success: true,
+    data: sqlResult,           // ⚠️ Structure SQL
+    tempPassword: tempPassword,
+    message: 'Compte réseau créé avec succès'
+  })
+)
+Hook s'attend à :
+
+if (!data || !data.sqlResult) {  // ❌ ERREUR: data.sqlResult n'existe pas
+  throw new Error("Aucune donnée retournée par la fonction");
+}
+
+const result: ReseauCreationResult = {
+  organisationId: data.sqlResult.organisationId,  // ❌ ERREUR: sqlResult n'est pas dans data
+  // ...
+};
+LA CAUSE DU BUG :
+L'Edge Function retourne data: sqlResult mais le hook cherche data.sqlResult - structure incohérente !
+
+Le hook doit être corrigé pour utiliser data.data au lieu de data.sqlResult, ou l'Edge Function doit retourner sqlResult: sqlResult.
+
+
+
+POURQUOI IL Y A CETTE ERREUR
+Basé sur mon analyse complète, il y a 2 problèmes distincts :
+
+1. PROBLÈME PRINCIPAL : AUTHENTIFICATION (401 Unauthorized)
+D'après les logs que j'ai analysés :
+
+POST | 401 | create-reseau-admin
+❌ AUTH: Invalid token
+L'utilisateur n'est PAS connecté/authentifié, c'est pourquoi l'Edge Function rejette la requête avec 401.
+
+2. PROBLÈME SECONDAIRE : STRUCTURE DE DONNÉES INCOHÉRENTE
+En relisant le code dans DETAIL-ETAPES.md, j'ai trouvé une incohérence :
+
+Edge Function retourne :
+
+{
+  "success": true,
+  "data": sqlResult,           // ← Ici
+  "tempPassword": "xxx",
+  "message": "Succès"
+}
+Hook attend :
+
+if (!data || !data.sqlResult) {     // ← Cherche data.sqlResult
+  throw new Error("Aucune donnée");  // ← Mais ça n'existe pas !
+}
+🎯 SOLUTION PRIORITAIRE
+1. D'abord résoudre l'authentification :
+
+L'utilisateur doit être connecté avec un compte admin_presenca
+Vérifier que l'URL de redirection Supabase est configurée correctement
+2. Ensuite corriger la structure de données :
+
+Soit changer le hook pour utiliser data.data
+Soit changer l'Edge Function pour retourner sqlResult: sqlResult
+L'erreur 401 est la cause principale - même si on corrige la structure, ça ne marchera pas tant que l'utilisateur n'est pas authentifié.
