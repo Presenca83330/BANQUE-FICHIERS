@@ -14,6 +14,20 @@ Ce ne sont pas de simples formulaires CRUD ce sont mes formulaires de gestion de
 En effet, cette application est en développement, n est pas en ligne et n'a pas de clients et il n est pas prévu pour l instant de permettre aux personnes de créer des comptes directement sur mon site.
 Tout passera par moi. Cet espace permettra de créer des comptes suite à des demandes ou des contacts de prospects et de mettre à jour des dossiers clients car souvent ils n aiment pas le faire eux-memes
 
+
+-------------------
+Parfait 
+nous avons travaillé sur 
+ce projet de formulaIre
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/2.FormReseauCreation.tsx
+tu as l explicaiton ici
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/2.FormReseauCreation.tsx
+
+Maintenant nous allons travailler sur le form de gstion qui va me permettre en tnat que admin presenca de mettre à jour une table reseau dans supabase déjà créée.
+
+--------------------
+
+
 Au départ, avant de nous connecter à Supabase, nous avions fait de simples formulaires.
 Hier, ensemble, nous avons changé de stratégie. Nous avons créé un dossier par formulaire.
 La structre est simple :
