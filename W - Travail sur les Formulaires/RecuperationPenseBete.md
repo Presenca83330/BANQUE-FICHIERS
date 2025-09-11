@@ -385,7 +385,6 @@ const loadCompleteReseauData = async (reseauId) => {
     .from('reseau')
     .select(`
       *,
-      reseau_direction(*),
       brevo_connexion(*),
       zoho_connexion(*),
       openai_connexion(*)
