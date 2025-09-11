@@ -18,9 +18,9 @@ Je t en dirai plus dans le chat suivant
 
 ---------------
 Parfait 
-nous avons travaillé sur ce projet de formulaIre
+nous avons travaillé sur ce projet de formulaIre Réseua
 src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/2.FormReseauCreation.tsx
-il est finalisé, tu as l explicaiton ici
+il est finalisé, tu as l explication, Analyse bien les hooks et fonctions utilisées.
 src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/2.FormReseauCreation.tsx
 ----------------
 Maintenant nous travaillons sur le form de gstion qui va me permettre en tnat que admin presenca de mettre à jour une table reseau dans supabase déjà créée.
