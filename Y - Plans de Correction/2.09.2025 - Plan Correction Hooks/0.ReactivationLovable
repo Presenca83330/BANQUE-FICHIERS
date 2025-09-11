@@ -14,8 +14,6 @@ Ce ne sont pas de simples formulaires CRUD ce sont mes formulaires de gestion de
 En effet, cette application est en développement, n est pas en ligne et n'a pas de clients et il n est pas prévu pour l instant de permettre aux personnes de créer des comptes directement sur mon site.
 Tout passera par moi. Cet espace permettra de créer des comptes suite à des demandes ou des contacts de prospects et de mettre à jour des dossiers clients car souvent ils n aiment pas le faire eux-memes
 
-
--------------------
 Parfait 
 nous avons travaillé sur 
 ce projet de formulaIre
@@ -23,26 +21,13 @@ src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Rese
 tu as l explicaiton ici
 src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/2.FormReseauCreation.tsx
 
-Maintenant nous allons travailler sur le form de gstion qui va me permettre en tnat que admin presenca de mettre à jour une table reseau dans supabase déjà créée.
-
---------------------
--------------------
-Parfait 
-nous avons travaillé sur 
-ce projet de formulaIre
-src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/2.FormReseauCreation.tsx
-tu as l explicaiton ici
-src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/2.FormReseauCreation.tsx
-
-Maintenant nous allons travailler sur le form de gstion qui va me permettre en tnat que admin presenca de mettre à jour une table reseau dans supabase déjà créée.
+Maintenant nous travaillons sur le form de gstion qui va me permettre en tnat que admin presenca de mettre à jour une table reseau dans supabase déjà créée.
 
 Tu as rédigé ce prompt de reprise
 PROMPT DE REPRISE - FormReseauGestion Architecture Hooks
 📋 CONTEXTE PROJET
 Fichier principal : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/3.FormReseauGestion.tsx
-
 Documentation : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/ProcessAfaireFormGestion.md
-
 Objectif : Formulaire de gestion des réseaux pour administrateurs PRESENCA avec workflow de sélection → affichage lecture seule → édition
 
 ✅ DÉCISIONS VALIDÉES AUJOURD'HUI
@@ -68,7 +53,6 @@ Général : reseau_nom, reseau_identite_commerciale, reseau_adresse, reseau_code
 Intégrations : API keys + emails + noms comptes pour Brevo/Zoho/OpenAI
 Fichiers : reseau_logo (single) + reseau_ressources (array)
 Requête de chargement :
-
 supabase.from('reseau').select(`
   *,
   organisations(*),
@@ -78,7 +62,6 @@ supabase.from('reseau').select(`
 `).eq('reseau_id', reseauId).single()
 🎯 ÉTAT ACTUEL DU CODE
 FormReseauGestion.tsx :
-
 Structure onglets OK (Général/Intégrations/Fichiers)
 GraphBoutonModifier intégré dans chaque section
 Form state basique avec useState
@@ -130,7 +113,29 @@ Types TypeScript pour les données
 Documentation :
 
 ProcessAfaireFormGestion.md → Complet, mise à jour hooks demain
-🎯 MISSION DEMAIN : Étudier toutes les hypothèses d'architecture hooks et définir la stratégie optimale avant implémentation.
+🎯 Aujourd'hui nous avons étudier toutes les hypothèses d'architecture hooks et nous avons défini la stratégie optimale avant implémentation.
+
+-> Nous avons enregistré dans ce fichier tous les modifications que nous allons suivre
+Il est OBLIGATOIRE de les suivre à la lettre 
+Nous avons également défini les 4 étapes de mise en place
+Lis et analyse attentivement ce document
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/ProcessAfaireFormGestion.md
+
+-> Nous travaillons actuellement sur la rédaction de tous les fichiers
+dans ce document
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/DétailsProcessEtFichiers.md
+tant que nous n aurons pas rédigé tous les documents toute modification en dur, de modification ou de création de fichier est interdite
+
+-> Nous utilisons ce document 
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/TablesReferenceReseau.ts
+
+Pour avoir toutes les informations sur les tables en mémoire
+est ce clair?
+
+C'EST UNE QUESTION.
+INTERDICTION TOTALE ET ABSOLUE DE MODIFIER SANS MON ACCORD
+
+
 
 
 Merci de prendre compte de ces elemetns et nous allons reprendre notre travail---------------
