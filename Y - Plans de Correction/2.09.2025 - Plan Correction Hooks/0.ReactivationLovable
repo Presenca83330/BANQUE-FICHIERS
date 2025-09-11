@@ -26,7 +26,115 @@ src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Rese
 Maintenant nous allons travailler sur le form de gstion qui va me permettre en tnat que admin presenca de mettre à jour une table reseau dans supabase déjà créée.
 
 --------------------
+-------------------
+Parfait 
+nous avons travaillé sur 
+ce projet de formulaIre
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/2.FormReseauCreation.tsx
+tu as l explicaiton ici
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/2.FormReseauCreation.tsx
 
+Maintenant nous allons travailler sur le form de gstion qui va me permettre en tnat que admin presenca de mettre à jour une table reseau dans supabase déjà créée.
+
+Tu as rédigé ce prompt de reprise
+PROMPT DE REPRISE - FormReseauGestion Architecture Hooks
+📋 CONTEXTE PROJET
+Fichier principal : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/3.FormReseauGestion.tsx
+
+Documentation : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/ProcessAfaireFormGestion.md
+
+Objectif : Formulaire de gestion des réseaux pour administrateurs PRESENCA avec workflow de sélection → affichage lecture seule → édition
+
+✅ DÉCISIONS VALIDÉES AUJOURD'HUI
+ÉTAPE 1 - Sélection réseau ✅
+Solution : Dropdown avec recherche intégrée (Option A validée)
+Composant : Shadcn Select customisé
+Recherche : Temps réel sur reseau_nom, organisation_nom, reseau_ville
+Affichage item : {reseau_nom} + {organisation_nom} • {reseau_ville} • Statut: {reseau_statut}
+Trigger : onValueChange déclenche chargement automatique des données
+ÉTAPE 2 - Intégration champs ✅
+Solution : Mode lecture seule + bouton modifier (Option 2 validée)
+Workflow : Sélection → Affichage disabled → Clic "Modifier" → Édition → "Annuler/Enregistrer"
+Composant existant : GraphBoutonModifier.tsx (réutilisation)
+États : Gestion par section (Général/Intégrations/Fichiers)
+📊 ARCHITECTURE DONNÉES DÉFINIE
+Tables impliquées :
+reseau (données principales)
+organisations (jointure pour nom organisation)
+brevo_connexion, zoho_connexion, openai_connexion (intégrations)
+Storage bucket bucket-table-reseau (fichiers)
+Champs par onglet :
+Général : reseau_nom, reseau_identite_commerciale, reseau_adresse, reseau_code_postal, reseau_ville, reseau_siret + champs bloqués ReseauDirection
+Intégrations : API keys + emails + noms comptes pour Brevo/Zoho/OpenAI
+Fichiers : reseau_logo (single) + reseau_ressources (array)
+Requête de chargement :
+
+supabase.from('reseau').select(`
+  *,
+  organisations(*),
+  brevo_connexion(*), 
+  zoho_connexion(*),
+  openai_connexion(*)
+`).eq('reseau_id', reseauId).single()
+🎯 ÉTAT ACTUEL DU CODE
+FormReseauGestion.tsx :
+
+Structure onglets OK (Général/Intégrations/Fichiers)
+GraphBoutonModifier intégré dans chaque section
+Form state basique avec useState
+Pas encore de dropdown sélection ni chargement données
+GraphBoutonModifier.tsx :
+
+Composant fonctionnel avec états isEditing
+Props : onSave, onCancel, onEditingChange, isLoading
+Boutons "Modifier" → "Annuler/Enregistrer"
+🚀 PROCHAINE ÉTAPE - ARCHITECTURE HOOKS
+Mission demain : Définir l'architecture complète des hooks pour implémenter le workflow
+
+Hooks identifiés :
+useReseauFormData → Hook principal orchestrateur
+useReseauSelector → Dropdown sélection + recherche
+useReseauIntegrations → Gestion Brevo/Zoho/OpenAI
+useReseauFiles → Upload fichiers + storage
+useReseauValidation → Validation champs par section
+useReseauQueries → Requêtes Supabase centralisées
+useEditingStates → États d'édition par section
+Questions à trancher demain :
+Un hook centralisé vs hooks modulaires spécialisés ?
+Hooks composés (qui utilisent d'autres hooks) ou indépendants ?
+Gestion du state partagé entre hooks ?
+Hooks par onglet ou transversaux ?
+Cache et optimisation des requêtes ?
+Interface pressentie useReseauFormData :
+
+interface UseReseauFormDataReturn {
+  reseauData: ReseauCompleteData | null;
+  isLoading: boolean;
+  loadReseauData: (reseauId: string) => Promise<void>;
+  updateField: (section: string, field: string, value: any) => void;
+  editingStates: { general: boolean; integrations: boolean; files: boolean; };
+  toggleEditMode: (section: string) => void;
+  saveSection: (section: string) => Promise<void>;
+  cancelEdit: (section: string) => void;
+}
+📁 FICHIERS CONCERNÉS
+Existants à modifier :
+
+3.FormReseauGestion.tsx → Intégrer dropdown + hooks
+5.GraphBoutonModifier.tsx → OK (réutilisation)
+À créer demain :
+
+Tous les hooks définis
+Composant DropdownReseauSelector
+Types TypeScript pour les données
+Documentation :
+
+ProcessAfaireFormGestion.md → Complet, mise à jour hooks demain
+🎯 MISSION DEMAIN : Étudier toutes les hypothèses d'architecture hooks et définir la stratégie optimale avant implémentation.
+
+
+Merci de prendre compte de ces elemetns et nous allons reprendre notre travail---------------
+--------------
 
 Au départ, avant de nous connecter à Supabase, nous avions fait de simples formulaires.
 Hier, ensemble, nous avons changé de stratégie. Nous avons créé un dossier par formulaire.
