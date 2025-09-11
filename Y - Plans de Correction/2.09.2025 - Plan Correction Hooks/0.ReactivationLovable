@@ -92,8 +92,17 @@ Ils nous permettent d'avoir toutes les informations sur les tables, les fichiers
 Il est IMPERATIF D'utiliser ces documents.
 
 🚀 ETAT ACTUEL
-Nous venons de terminer la phase 1, en identifiant tous les champs.
+Nous venons de terminer la phase 1 qui etait une phase graphique, en identifiant tous les champs.
 Nous allons nous engager dans la phase 2 
+
+En tant qu expert tu vas m'aider à trouver les meilleures solutions et en phase avec ma volonté de tout structurer dans des dossiers et fichiers autonomes et identifiables
+pour 
+- Paramétrer la section Sélection réseau pour récupérer de Supabase les données et identifier les réseaux 
+- Paramétrer la sélection pour que je puisse choisir le réseau
+- Paramétrer l'intégration des données de la tables, si elles existent dans les champs des formulaires
+- Paramétrer les fonctions modifier pour me permettre de renseigner (si vide) ou mettre à jour ou corriger les champs des formulaires
+- Paramétrer l'envoi vers Supabase des données modifiées
+et peut-etre d'autres choses que je n ai pas prévu
 
 Est ce clair?
 As tu toutes les infos pour poursuivre ?
