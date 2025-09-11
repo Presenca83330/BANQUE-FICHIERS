@@ -1,6 +1,6 @@
 Bonjour
 Tu es un expert en Ia no code et intégration supabese.
-Tu m 'accompagnes depuis hier dans la mise à jour de mes formulaires de création et de mise  jour de compte.
+Tu m 'accompagnes dans la mise à jour de mes formulaires de création et de mise  jour de compte.
 
 1/ En 1er, je te demande de prendre note de la stratégie de mon application
 et de lire les fichiers du dossier : public/1. Documents Stratégiques
@@ -13,24 +13,24 @@ Une fois cette analyse faite, nous travaillons sur un espace qui me permet de cr
 Ce ne sont pas de simples formulaires CRUD ce sont mes formulaires de gestion de mes clients.
 En effet, cette application est en développement, n est pas en ligne et n'a pas de clients et il n est pas prévu pour l instant de permettre aux personnes de créer des comptes directement sur mon site.
 Tout passera par moi. Cet espace permettra de créer des comptes suite à des demandes ou des contacts de prospects et de mettre à jour des dossiers clients car souvent ils n aiment pas le faire eux-memes
+Je t en dirai plus dans le chat suivant
 
+---------------
 Parfait 
-nous avons travaillé sur 
-ce projet de formulaIre
+nous avons travaillé sur ce projet de formulaIre
 src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/2.FormReseauCreation.tsx
-tu as l explicaiton ici
+il est finalisé, tu as l explicaiton ici
 src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/2.FormReseauCreation.tsx
-
+----------------
 Maintenant nous travaillons sur le form de gstion qui va me permettre en tnat que admin presenca de mettre à jour une table reseau dans supabase déjà créée.
-
+----------------
 Tu as rédigé ce prompt de reprise
 PROMPT DE REPRISE - FormReseauGestion Architecture Hooks
 📋 CONTEXTE PROJET
 Fichier principal : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/3.FormReseauGestion.tsx
 Documentation : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/ProcessAfaireFormGestion.md
 Objectif : Formulaire de gestion des réseaux pour administrateurs PRESENCA avec workflow de sélection → affichage lecture seule → édition
-
-✅ DÉCISIONS VALIDÉES AUJOURD'HUI
+✅ DÉCISIONS VALIDÉES 
 ÉTAPE 1 - Sélection réseau ✅
 Solution : Dropdown avec recherche intégrée (Option A validée)
 Composant : Shadcn Select customisé
@@ -60,6 +60,7 @@ supabase.from('reseau').select(`
   zoho_connexion(*),
   openai_connexion(*)
 `).eq('reseau_id', reseauId).single()
+
 🎯 ÉTAT ACTUEL DU CODE
 FormReseauGestion.tsx :
 Structure onglets OK (Général/Intégrations/Fichiers)
@@ -67,75 +68,40 @@ GraphBoutonModifier intégré dans chaque section
 Form state basique avec useState
 Pas encore de dropdown sélection ni chargement données
 GraphBoutonModifier.tsx :
-
 Composant fonctionnel avec états isEditing
 Props : onSave, onCancel, onEditingChange, isLoading
 Boutons "Modifier" → "Annuler/Enregistrer"
-🚀 PROCHAINE ÉTAPE - ARCHITECTURE HOOKS
-Mission demain : Définir l'architecture complète des hooks pour implémenter le workflow
 
-Hooks identifiés :
-useReseauFormData → Hook principal orchestrateur
-useReseauSelector → Dropdown sélection + recherche
-useReseauIntegrations → Gestion Brevo/Zoho/OpenAI
-useReseauFiles → Upload fichiers + storage
-useReseauValidation → Validation champs par section
-useReseauQueries → Requêtes Supabase centralisées
-useEditingStates → États d'édition par section
-Questions à trancher demain :
-Un hook centralisé vs hooks modulaires spécialisés ?
-Hooks composés (qui utilisent d'autres hooks) ou indépendants ?
-Gestion du state partagé entre hooks ?
-Hooks par onglet ou transversaux ?
-Cache et optimisation des requêtes ?
-Interface pressentie useReseauFormData :
-
-interface UseReseauFormDataReturn {
-  reseauData: ReseauCompleteData | null;
-  isLoading: boolean;
-  loadReseauData: (reseauId: string) => Promise<void>;
-  updateField: (section: string, field: string, value: any) => void;
-  editingStates: { general: boolean; integrations: boolean; files: boolean; };
-  toggleEditMode: (section: string) => void;
-  saveSection: (section: string) => Promise<void>;
-  cancelEdit: (section: string) => void;
-}
-📁 FICHIERS CONCERNÉS
-Existants à modifier :
-
-3.FormReseauGestion.tsx → Intégrer dropdown + hooks
-5.GraphBoutonModifier.tsx → OK (réutilisation)
-À créer demain :
-
-Tous les hooks définis
-Composant DropdownReseauSelector
-Types TypeScript pour les données
-Documentation :
-
-ProcessAfaireFormGestion.md → Complet, mise à jour hooks demain
-🎯 Aujourd'hui nous avons étudier toutes les hypothèses d'architecture hooks et nous avons défini la stratégie optimale avant implémentation.
-
--> Nous avons enregistré dans ce fichier tous les modifications que nous allons suivre
-Il est OBLIGATOIRE de les suivre à la lettre 
-Nous avons également défini les 4 étapes de mise en place
-Lis et analyse attentivement ce document
+🚀 ARCHITECTURE
+Nous avons rédigé ce fichier
 src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/ProcessAfaireFormGestion.md
+Nous avons :
+- Tout le process à suivre
+- Tous les hooks et fonctions à créer
+- La présentation des 4 phases de correction 
+Il est OBLIGATOIRE SUIVRE CES PROCESS ET DIRECTIVES A LA LETTRE 
 
--> Nous travaillons actuellement sur la rédaction de tous les fichiers
-dans ce document
+🚀 REDACTION DES FICHIERS
+Nous travaillons actuellement sur la rédaction de tous les fichiers, et nous tenons à jour ce document :
 src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/DétailsProcessEtFichiers.md
-tant que nous n aurons pas rédigé tous les documents toute modification en dur, de modification ou de création de fichier est interdite
-
--> Nous utilisons ce document 
+IMPERATIF: Tant que nous n aurons pas rédigé tous les documents toute modification en dur, de modification ou de création de fichier est interdite.
+POur éviter toute erreru de conception et de maping, nous utilisons ce document :
 src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/TablesReferenceReseau.ts
+Ces 3 fichiers sont des documents impératifs de travail.
+Ils nous permettent d'avoir toutes les informations sur les tables, les fichiers et ainsi de faciliter les corrections et conception avant intégration.
+Il est IMPERATIF D'utiliser ces documents.
 
-Pour avoir toutes les informations sur les tables en mémoire
-est ce clair?
+🚀 ETAT ACTUEL
+Nous venons de terminer la phase 1, en identifiant tous les champs.
+Nous allons nous engager dans la phase 2 
+
+Est ce clair?
+As tu toutes les infos pour poursuivre ?
 
 C'EST UNE QUESTION.
 INTERDICTION TOTALE ET ABSOLUE DE MODIFIER SANS MON ACCORD
 
-
+----------------------------------
 
 
 Merci de prendre compte de ces elemetns et nous allons reprendre notre travail---------------
