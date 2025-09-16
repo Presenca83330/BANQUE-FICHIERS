@@ -191,3 +191,58 @@ Je te rappelle
 - Tu dois répondre sans toucher aux fichiers de l'application
 - Exception unique : enrichissement du fichier DétailsProcessEtFichiers.md si demandé
 
+
+
+
+
+Parfait, je vais tout te rééxpliquer pour te dire ce que j attends de toi maintenant.
+- Tu es un expert ia no code intégration supabase et j ai besoin de toi
+- je vais t expliquer dans le chat suivant
+- 
+---------------------------------------
+Comme tu maitrises parfaitement les environnement Saas, les meilleures logiciels et que tu appliques avec rigueur les directives que tu reçois
+- Tu vas m 'accompagner dans la mise à jour de mon formulaire de gestion
+- je vais t expliquer après
+
+--------------------------------------
+
+Nous avons travaillé ensemble sur ce fichier 
+-> src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6-Fichiers Préparés pour Intégration.md
+- Ce fichier comprend tous les fichiers que nous avons conçu en vue de la préparation du paramétrage de notre formulaire
+- Tout est codé parfaitement
+- Nous n avons pas voulu les mettre en place dans l application avant d avoir tous les codes complets
+- Tous ces codes préparatoires seront à copier et à appliquer selon les directives et les emplacemetns prévus
+- Nous allons ensemble passer à l implentation de ces fichiers dans mon applicaton et des actions dans supabase
+- >>>>- Interdictions absolues
+  >>>>- . Interdiction absolue de modifier le contenu de ce code
+  >>>>- . Interdiction absolue de changer le nom de ce fichier (hook, composants, edge) . Interdiction absolue d'intégrer ce fichier à un autre endroit que celui qui est imposé
+  >>>>- . Interdiction de procéder au lancement de l'étape suivante sans mon accord . Interdiction absolue de procéder à l'implantation d'un autre fichier, hook, composant, edge sans mon accord
+  >>>>- - Si tu rencontres le moindre bug ou probleme, tu stoppes tout et tu m'avertis du problème rencontré.
+  >>>>  - . Interdiction absolue d'effectuer une correction sans mon accord
+- est ce clair ?
+- je vais te donner la marche à suivre des etapes dans le chat suivant
+
+--------------------------------------
+Lis le fichier : 
+- src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6-Etapes d'Intégration.md
+- il décrit les etapes à suivre pour intégrer les codes préparatoires détaillés dans
+- src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6-Fichiers Préparés pour Intégration.md
+  Est-ce clair?
+
+  C'EST UNE QUESTION.
+  INTERDICTION TOTALE ET ABSOLUE DE MODIFIER DES FICHIERS SANS MON ACCORD
+
+------------------
+RAPPEL DES ROUTES OBLIGATOIRES A RESPECTER
+- Hook Principal : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/useReseauFormData.ts
+- Hook Intégrations : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/useReseauIntegrations.ts
+- Types	types.ts : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/types.ts
+- Page Principale	: src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/3.FormReseauGestion.tsx
+- Composant Selector : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/components/ReseauSelector.tsx
+- Edge Function Update : supabase/functions/update-reseau/index.ts
+- Edge Function Upload : supabase/functions/upload-reseau-files/index.ts
+- Migration Storage	migration-storage-buckets.sql	
+
+
+
+
