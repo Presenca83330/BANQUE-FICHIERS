@@ -220,7 +220,7 @@ Nous avons travaillé ensemble sur ce fichier
   >>>>- - Si tu rencontres le moindre bug ou probleme, tu stoppes tout et tu m'avertis du problème rencontré.
   >>>>  - . Interdiction absolue d'effectuer une correction sans mon accord
 - est ce clair ?
-- je vais te donner la marche à suivre des etapes dans le chat suivant
+- je vais t'expliquer ce que nous faisons et où nous en sommes dans la phase d'implémentation
 
 --------------------------------------
 Lis le fichier : 
