@@ -61,7 +61,7 @@ Nous allons donc travailler ce matin à corriger ce fichier
 Mais on va travailler tranquillement et éviter de faire des bugs 
 pour nous permettre de travailler sereinement j ai fait un clone de ce fichier
 ici
-src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6=FormGestion.tsx
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V17.9.2025-FormGestion.tsx
 
 c est le meme code mais nous pourrons travaillons sans risque en cas d erreur
 c est sur lui que nous allons travailler et tester les codes de correction
@@ -76,7 +76,7 @@ Je vais t expliquer dans le chat suivant
 -------------------
 
 
-Directive pour correction du fichier clone : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6=FormGestion.tsx
+Directive pour correction du fichier clone : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V17.9.2025-FormGestion.tsx
 
 IMPORTANT :
 
@@ -84,7 +84,7 @@ Ne pas modifier le graphisme, les placeholders, ni le contenu rédactionnel des 
 
 
 
-On part strictement de src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6=FormGestion.tsx
+On part strictement de src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V17.9.2025-FormGestion.tsx
 
 ✅ Correctifs fonctionnels demandés
 Ajouter et utiliser le hook intégrations
