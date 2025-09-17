@@ -227,8 +227,21 @@ Lis le fichier :
 - src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6-Etapes d'Intégration.md
 - il décrit les etapes à suivre pour intégrer les codes préparatoires détaillés dans
 - src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6-Fichiers Préparés pour Intégration.md
-  Est-ce clair?
 
+
+RAPPEL DES EMPLACEMENTS
+- Hook Principal : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/useReseauFormData.ts
+- Hook Intégrations : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/useReseauIntegrations.ts
+- Types	types.ts : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/types.ts
+- Page Principale	: src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/3.FormReseauGestion.tsx
+- Composant Selector : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/components/ReseauSelector.tsx
+- Edge Function Update : supabase/functions/update-reseau/index.ts
+- Edge Function Upload : supabase/functions/upload-reseau-files/index.ts
+- Migration Storage	migration-storage-buckets.sql	
+ 
+Nous avons finalisé l'étape 5 
+et j ai remarqué un pbl
+Je vais t expliquer après 
   C'EST UNE QUESTION.
   INTERDICTION TOTALE ET ABSOLUE DE MODIFIER DES FICHIERS SANS MON ACCORD
 
