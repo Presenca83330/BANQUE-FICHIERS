@@ -1,0 +1,197 @@
+Bonjour expert ia no code développemetn et intégration supabase
+Tu es un expert en Ia no code et intégration supabese. Tu maitrises parfaitement les environnement Saas, les meilleures logiciels et ia Tu m 'accompagnes dans la mise à jour de mon formulaire de gestion de mise jour de compte.
+Je vais t expliquer dans le chat suivant
+------------------
+Nous avons travaillé ensemble sur ce fichier 
+-> src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6-Fichiers Préparés pour Intégration.md
+
+Ce fichier comprend tous les fichiers que nous avions conçu en vue de la préparation du paramétrage de notre formulaire
+
+Tout est codé parfaitement
+
+Nous n avions pas voulu les mettre en place dans l application avant d avoir tous les codes complets
+Tous ces codes préparatoires etaient ou seront à copier et à appliquer selon les directives et les emplacemets prévus
+
+Je vais t expliquer dans le chat suivant
+-------------------
+
+Nous allons ensemble passer à l implentation de ces fichiers dans mon applicaton et des actions dans supabase
+Nous avons finalisé 5 étapes 
+
+Lis le fichier : 
+- src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6-Etapes d'Intégration.md
+- il décrit les etapes à suivre pour intégrer les codes préparatoires détaillés dans
+- src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6-Fichiers Préparés pour Intégration.md
+
+RAPPEL DES EMPLACEMENTS
+- Hook Principal : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/useReseauFormData.ts
+- Hook Intégrations : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/useReseauIntegrations.ts
+- Types	types.ts : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/types.ts
+- Page Principale	: src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/3.FormReseauGestion.tsx
+- Composant Selector : src/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/components/ReseauSelector.tsx
+- Edge Function Update : supabase/functions/update-reseau/index.ts
+- Edge Function Upload : supabase/functions/upload-reseau-files/index.ts
+- Migration Storage	migration-storage-buckets.sql	
+ 
+Comme je te l'ai dit 
+Nous avons finalisé l'étape 5 
+et j ai remarqué un pbl
+Je vais t expliquer dans le chat suivant
+-------------------
+
+Analyse le fichier
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/3.FormReseauGestion.tsx
+
+Je me sius rendu compte qu il n"était pas dans sa conception
+en phase avec nos hooks composent fonction  de 
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6-Fichiers Préparés pour Intégration.md
+
+Nous avons identifié ces pbls :
+
+❌ Hook Intégrations manquant : useReseauIntegrations non utilisé
+❌ Onglet Intégrations non fonctionnel : Connecter au hook intégrations
+❌ Edge Functions non utilisées : Utiliser update-reseau au lieu de sauvegarde directe
+❌ Upload Fichiers manquant : Intégrer upload-reseau-files
+
+
+Nous allons donc travailler ce matin à corriger ce fichier
+Mais on va travailler tranquillement et éviter de faire des bugs 
+pour nous permettre de travailler sereinement j ai fait un clone de ce fichier
+ici
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6=FormGestion.tsx
+
+c est le meme code mais nous pourrons travaillons sans risque en cas d erreur
+c est sur lui que nous allons travailler et tester les codes de correction
+C est le meme code que src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/3.FormReseauGestion.tsx
+il manque juste la fonction retour car nous ne sommes pas relié à Accueil
+Mais nous le ferons quand nous aurons trouvé le code parfait et que nous pourrons corriger
+de manière sure 3.FormReseauGestion.tsx
+
+Est ce clair ?
+Es tu prêt à reprendre notre travail ?
+Je vais t expliquer dans le chat suivant
+-------------------
+
+
+Directive pour correction du fichier clone : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6=FormGestion.tsx
+
+IMPORTANT :
+
+Ne pas modifier le graphisme, les placeholders, ni le contenu rédactionnel des onglets et sections.
+
+
+
+On part strictement de src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6=FormGestion.tsx
+
+✅ Correctifs fonctionnels demandés
+Ajouter et utiliser le hook intégrations
+Importer et appeler :
+import { useReseauIntegrations } from '@/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/useReseauIntegrations';
+Récupérer les connexions disponibles et la méthode de sauvegarde :
+const {
+  brevoConnections,
+  zohoConnections,
+  openaiConnections,
+  loadAllConnections,
+  saveIntegrations,
+} = useReseauIntegrations();
+
+Charger les connexions dans le useEffect :
+useEffect(() => {
+  loadReseaux();
+  loadAllConnections();
+}, [loadReseaux, loadAllConnections]);
+
+Brancher l’onglet Intégrations au hook
+Remplacer la logique actuelle en dur par l’appel réel au hook :
+<Select
+  value={formData.reseau_brevo_connexion_id || ''}
+  onValueChange={(value) => updateFormField('reseau_brevo_connexion_id', value)}
+  disabled={!isEditingIntegrations}
+>
+  <SelectTrigger>
+    <SelectValue placeholder="Sélectionner une connexion Brevo" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="">Aucune connexion</SelectItem>
+    {brevoConnections.map((connection) => (
+      <SelectItem key={connection.id} value={connection.id}>
+        {connection.nom} ({connection.email})
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
+
+Même logique pour Zoho et OpenAI, reliées à leurs listes (zohoConnections, openaiConnections).
+Sauvegarde via :
+await saveIntegrations(selectedReseauId, {
+  brevo: formData.reseau_brevo_connexion_id,
+  zoho: formData.reseau_zoho_connexion_id,
+  openai: formData.reseau_openai_connexion_id,
+});
+
+Utiliser l’Edge Function pour sauvegarde des données générales
+Dans handleSaveGeneral, remplacer l’appel direct à saveReseau par :
+const payload = {
+  reseauId: selectedReseauId,
+  generalData: {
+    reseau_nom: formData.reseau_nom,
+    reseau_identite_commerciale: formData.reseau_identite_commerciale,
+    reseau_adresse: formData.reseau_adresse,
+    reseau_code_postal: formData.reseau_code_postal,
+    reseau_ville: formData.reseau_ville,
+    reseau_siret: formData.reseau_siret,
+  }
+};
+const { data, error } = await supabase.functions.invoke('update-reseau', {
+  body: JSON.stringify(payload)
+});
+
+Upload fichiers via Edge Function upload-reseau-files
+Implémenter handleFileUpload :
+const handleFileUpload = async (file: File, type: 'logo' | 'document') => {
+  if (!selectedReseauId) return;
+
+  try {
+    const payload = {
+      reseauId: selectedReseauId,
+      type,
+      filename: file.name,
+    };
+
+    const { data, error } = await supabase.functions.invoke('upload-reseau-files', {
+      body: JSON.stringify(payload),
+    });
+
+    if (error) throw error;
+
+    const { fileUrl } = data;
+
+    if (type === 'logo') {
+      updateFormField('reseau_logo', fileUrl);
+    } else {
+      const currentDocs = formData.reseau_documents || [];
+      updateFormField('reseau_documents', [...currentDocs, fileUrl]);
+    }
+
+    toast({
+      title: "Succès",
+      description: `${type === 'logo' ? 'Logo' : 'Document'} téléchargé avec succès`,
+    });
+  } catch (error: any) {
+    console.error('Erreur upload:', error);
+    toast({
+      title: "Erreur",
+      description: "Impossible de télécharger le fichier",
+      variant: "destructive",
+    });
+  }
+};
+
+📌 Résumé à Lovable
+
+👉 Ne touche pas au design, ni aux placeholders, ni aux textes.
+👉 Nous travaillons sur ce fichier comme s'il etait fonctionnel prêt à être utilisé 
+👉 Applique uniquement ces 4 corrections techniques pour connecter le formulaire aux hooks et Edge Functions.
+JE TE RAPPELLE INTERDIT DE MODIFIER TOUT ELEMENT DU GRAPHISME - TEXTE PREHOLDER CHAMPS ETC
+INTERDICTON DE MODIFIER UN AUTRE FICHIER DE L APPLICATION SANS MON ACCORD
