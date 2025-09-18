@@ -7,10 +7,9 @@ Je vais t expliquer ce qu on va faire ensemble dans le chat suivant
 ------------------
 Nous avons travaillé ensemble sur ce fichier 
 -> src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6-Fichiers Préparés pour Intégration.md
-
 Ce fichier comprend tous les fichiers que nous avions conçu en vue de la préparation du paramétrage de notre formulaire
 
-Tout est codé parfaitement
+Tout était codé parfaitement
 
 Nous n avions pas voulu les mettre en place dans l application avant d avoir tous les codes complets
 Tous ces codes préparatoires etaient ou seront à copier et à appliquer selon les directives et les emplacemets prévus
@@ -56,145 +55,84 @@ Nous avons identifié ces pbls :
 ❌ Edge Functions non utilisées : Utiliser update-reseau au lieu de sauvegarde directe
 ❌ Upload Fichiers manquant : Intégrer upload-reseau-files
 
+Je vais t expliquer dans le chat suivant
+-------------------
 
-Nous allons donc travailler ce matin à corriger ce fichier
-Mais on va travailler tranquillement et éviter de faire des bugs 
+Nous avons tous les 2 commencé à  travailler à corriger ce fichier
+POur travailler travailler tranquillement et éviter de faire des bugs 
 pour nous permettre de travailler sereinement j ai fait un clone de ce fichier
 ici
 src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V17.9.2025-FormGestion.tsx
 
-c est le meme code mais nous pourrons travaillons sans risque en cas d erreur
-c est sur lui que nous allons travailler et tester les codes de correction
+c est le meme code 
+c est sur lui que nous avons travaillé et testé les codes de correction
 C est le meme code que src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/3.FormReseauGestion.tsx
 il manque juste la fonction retour car nous ne sommes pas relié à Accueil
 Mais nous le ferons quand nous aurons trouvé le code parfait et que nous pourrons corriger
 de manière sure 3.FormReseauGestion.tsx
 
-Est ce clair ?
-Es tu prêt à reprendre notre travail ?
+Mais à encore on a eu des pbls 
 Je vais t expliquer dans le chat suivant
 -------------------
+En fait, tous les fichiers actuellement implanté sont ici
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.0.FICHIERS.md
+
+Je vais t expliquer dans le chat suivant ce que je compte faire
+-------------------
+J'ai remis sur la table la stratégie que je voulais implémenter dans mon formulaire de gestion
+elle est ici
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/.Strategie.Formulaire.Gestion.md
+
+lis la et je t explique dns le chat suivant 
+------------------------
+
+J'en suis arrivé à la conclusion qu'il fallait tout refaire
+pour partir sur des bases saines et eviter de faire comme on fait de corriger de coriger des patchs
+et avoir une strcutre et des codes propres
+
+est ce que je suis clair ?
+Alors j'ai tout reconstruit et recodé avec open ai tous les fichiers 
+Je vais t expliquer dans le chat suivant
+
+--------------------------
+
+Je vais maintenant te demander un gros travail d expert 
+j ai fait un fichier avec toute l architecture et les codes
+
+1/ Il va falloir que tu oublies les codes qui sont en place et sont souvent faux 
+2/ Oublie les !
+3/ Et maintenant tu vas lire mon fichier, analyser code par code et 
+4/ Tu vas me dire 
+- ce que tu en penses
+- les erreurs
+- les oublis 
+- les risques de bugs lors de l'implantation 
+pour bien comprendre 
+Analyse avant toutes les tables dans suapabase surtout 
+reseau, brevo, open ai, zoho
+-
+et étudie mes propositons ici
+src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/.Projet.Implantation.Form.Gestion.md
+
+et dis moi en expert ce que tu en penses ?
+
+--------------------
 
 
-Directive pour correction du fichier clone : src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V17.9.2025-FormGestion.tsx
 
-IMPORTANT :
+⚠️ Ne change pas le design ni les placeholders → seulement les branchements fonctionnels
+👉 On garde exactement le design et les placeholders existants.
+👉 On ne change pas la présentation  3 onglets champs bouton “Modifier” préholder n tesxte 
+).
+👉"INTERDICTION ABSOLUE d'ajouter des composants <Select> dans l'onglet Intégrations.  L'onglet Intégrations utilise EXACTEMENT la même logique que l'onglet Général : chargement automatique des données depuis la BDD + modification manuelle + sauvegarde. Aucun sélecteur de connexions existantes."
+"Onglet Intégrations = Input classiques uniquement. Pas de Select. Même logique que l'onglet Général."
+Rappel 
+seul le fichier
+ est à modifier
+INTERDICTION TOTALE ET ABSOLUE DE MODIFIER UN AUTRE FICHIER SANS MON ACCORD
+Si tu rencontres un pbl tu stoppes et tu demandes 
 
-Ne pas modifier le graphisme, les placeholders, ni le contenu rédactionnel des onglets et sections.
 
 
 
-On part strictement de src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V17.9.2025-FormGestion.tsx
-
-✅ Correctifs fonctionnels demandés
-Ajouter et utiliser le hook intégrations
-Importer et appeler :
-import { useReseauIntegrations } from '@/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/useReseauIntegrations';
-Récupérer les connexions disponibles et la méthode de sauvegarde :
-const {
-  brevoConnections,
-  zohoConnections,
-  openaiConnections,
-  loadAllConnections,
-  saveIntegrations,
-} = useReseauIntegrations();
-
-Charger les connexions dans le useEffect :
-useEffect(() => {
-  loadReseaux();
-  loadAllConnections();
-}, [loadReseaux, loadAllConnections]);
-
-Brancher l’onglet Intégrations au hook
-Remplacer la logique actuelle en dur par l’appel réel au hook :
-<Select
-  value={formData.reseau_brevo_connexion_id || ''}
-  onValueChange={(value) => updateFormField('reseau_brevo_connexion_id', value)}
-  disabled={!isEditingIntegrations}
->
-  <SelectTrigger>
-    <SelectValue placeholder="Sélectionner une connexion Brevo" />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectItem value="">Aucune connexion</SelectItem>
-    {brevoConnections.map((connection) => (
-      <SelectItem key={connection.id} value={connection.id}>
-        {connection.nom} ({connection.email})
-      </SelectItem>
-    ))}
-  </SelectContent>
-</Select>
-
-Même logique pour Zoho et OpenAI, reliées à leurs listes (zohoConnections, openaiConnections).
-Sauvegarde via :
-await saveIntegrations(selectedReseauId, {
-  brevo: formData.reseau_brevo_connexion_id,
-  zoho: formData.reseau_zoho_connexion_id,
-  openai: formData.reseau_openai_connexion_id,
-});
-
-Utiliser l’Edge Function pour sauvegarde des données générales
-Dans handleSaveGeneral, remplacer l’appel direct à saveReseau par :
-const payload = {
-  reseauId: selectedReseauId,
-  generalData: {
-    reseau_nom: formData.reseau_nom,
-    reseau_identite_commerciale: formData.reseau_identite_commerciale,
-    reseau_adresse: formData.reseau_adresse,
-    reseau_code_postal: formData.reseau_code_postal,
-    reseau_ville: formData.reseau_ville,
-    reseau_siret: formData.reseau_siret,
-  }
-};
-const { data, error } = await supabase.functions.invoke('update-reseau', {
-  body: JSON.stringify(payload)
-});
-
-Upload fichiers via Edge Function upload-reseau-files
-Implémenter handleFileUpload :
-const handleFileUpload = async (file: File, type: 'logo' | 'document') => {
-  if (!selectedReseauId) return;
-
-  try {
-    const payload = {
-      reseauId: selectedReseauId,
-      type,
-      filename: file.name,
-    };
-
-    const { data, error } = await supabase.functions.invoke('upload-reseau-files', {
-      body: JSON.stringify(payload),
-    });
-
-    if (error) throw error;
-
-    const { fileUrl } = data;
-
-    if (type === 'logo') {
-      updateFormField('reseau_logo', fileUrl);
-    } else {
-      const currentDocs = formData.reseau_documents || [];
-      updateFormField('reseau_documents', [...currentDocs, fileUrl]);
-    }
-
-    toast({
-      title: "Succès",
-      description: `${type === 'logo' ? 'Logo' : 'Document'} téléchargé avec succès`,
-    });
-  } catch (error: any) {
-    console.error('Erreur upload:', error);
-    toast({
-      title: "Erreur",
-      description: "Impossible de télécharger le fichier",
-      variant: "destructive",
-    });
-  }
-};
-
-📌 Résumé à Lovable
-
-👉 Ne touche pas au design, ni aux placeholders, ni aux textes.
-👉 Nous travaillons sur ce fichier comme s'il etait fonctionnel prêt à être utilisé 
-👉 Applique uniquement ces 4 corrections techniques pour connecter le formulaire aux hooks et Edge Functions.
-JE TE RAPPELLE INTERDIT DE MODIFIER TOUT ELEMENT DU GRAPHISME - TEXTE PREHOLDER CHAMPS ETC
 INTERDICTON DE MODIFIER UN AUTRE FICHIER DE L APPLICATION SANS MON ACCORD
