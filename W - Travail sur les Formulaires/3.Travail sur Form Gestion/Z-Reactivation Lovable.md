@@ -8,7 +8,9 @@ Bonjour
 - Tu ne modifies pas ce qu on ne t a pas demandé
 - Tu es un vrai expert professionnel
 
-Je vais t expliquer ce qu on va faire ensemble dans le chat suivant :
+Je vais t'expliquer dans le chat suivant ce que nous allons faire ensemble.
+
+
 ---
 
 Nous avons travaillé ensemble sur l'implantation du process de mon formulaire de gestion
