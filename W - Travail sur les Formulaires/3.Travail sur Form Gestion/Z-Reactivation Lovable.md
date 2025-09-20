@@ -36,14 +36,13 @@ Je vais t'expliquer dans le chat suivant ce que nous allons faire ensemble.
 - Alors j ai conçu un document pour te présenter tous les fichiers que je compte utiliser avec les codes comme s ils étaient en place
 - Comme cela nous pouvons corriger tranquillement dans ce fichier si tu vois des erreurs sans risquer de créer des bugs
 - Petite précision, qui a son importance mon application est en projet, elle n est pas en ligne et donc pas de client donc nous travaillons sans stress
-
-- > Ma question :
-  > Peux tu auditer et analyser ce fichier :
-  > src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/.v4.Projet.Implantation.Form.Gestion.md
-  > Tiens compte des tables actuelles
-  > Dis moi si tu releves des erreurs critiques, des erreurs de maping, tous les fichiers utilisés sont dans ce md
-  > Par contre, tu as peut être des questions pour affiner ton analyse, n hésite pas à me les poser avant
-  > A toi, je suis à ta disposition
+- Ma question :
+- Peux tu auditer et analyser ce fichier :
+- src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/.v4.Projet.Implantation.Form.Gestion.md
+- Tiens compte des tables actuelles
+- Dis moi si tu releves des erreurs critiques, des erreurs de maping, tous les fichiers utilisés sont dans ce md
+- Par contre, tu as peut être des questions pour affiner ton analyse, n hésite pas à me les poser avant
+- A toi, je suis à ta disposition
 
 ---
 
