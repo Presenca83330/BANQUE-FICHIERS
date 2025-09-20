@@ -87,10 +87,10 @@ VALUES (..., p_email_responsable, p_telephone_responsable, ...)
 - RÉSULTAT : Les deux tables peuvent avoir des valeurs différentes
   
 2/ CONTRAINTES UNIQUE CONFLICTUELLES 
-- Exemple de conflit possible :
-. reseau.reseau_email = 'admin@reseau1.fr'
-. reseau_direction.reseau_direction_email = 'direction@reseau1.fr'
-. -> Deux emails différents pour le même réseau
+Exemple de conflit possible : 
+- reseau.reseau_email = 'admin@reseau1.fr'
+- reseau_direction.reseau_direction_email = 'direction@reseau1.fr'
+- -> Deux emails différents pour le même réseau
 
 3/ DONNÉES ACTUELLES DÉJÀ SYNCHRONISÉES
 D'après les données existantes, actuellement les valeurs sont identiques :
