@@ -7,21 +7,21 @@ emailResponsable: "directeur@reseau.com"
 telephoneResponsable: "0123456789"
 
 🔄 2. Processus de création (fonction SQL create_reseau_compte_complet) :
--- Ces MÊMES valeurs sont injectées dans PLUSIEURS tables :
+Ces MÊMES valeurs sont injectées dans PLUSIEURS tables :
 
--- ✅ Table users
+✅ Table users
 INSERT INTO users (users_email, users_telephone, ...)
 VALUES (p_email_responsable, p_telephone_responsable, ...)
 
--- ✅ Table utilisateurs  
+✅ Table utilisateurs  
 INSERT INTO utilisateurs (utilisateur_email, ...)
 VALUES (p_email_responsable, ...)
 
--- ✅ Table reseau (MÊME email/tel!)
+✅ Table reseau (MÊME email/tel!)
 INSERT INTO reseau (reseau_email, reseau_telephone, ...)
 VALUES (p_email_responsable, p_telephone_responsable, ...)
 
--- ✅ Table reseau_direction
+✅ Table reseau_direction
 INSERT INTO reseau_direction (reseau_direction_email, reseau_direction_telephone, ...)
 VALUES (p_email_responsable, p_telephone_responsable, ...)
 
