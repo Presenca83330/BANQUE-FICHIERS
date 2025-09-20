@@ -68,14 +68,16 @@ Relation CASCADE entre les tables
 - Chaque table maintient ses propres valeurs indépendamment
 
 4/ PROCESSUS CRÉATION (Fonction create_reseau_compte_complet) 
+```typescript
 - À la création, les MÊMES valeurs sont insérées dans les deux tables :
 1/ Etape 4 - Table reseau
 - INSERT INTO reseau (..., reseau_email, reseau_telephone, ...)
 - VALUES (..., p_email_responsable, p_telephone_responsable, ...)
 
-2/ Étape 5 - Table reseau_direction  
+2/ Étape 5 - Table reseau_direction
 INSERT INTO reseau_direction (..., reseau_direction_email, reseau_direction_telephone, ...)
 VALUES (..., p_email_responsable, p_telephone_responsable, ...)
+```
 
 ---
 🚨 PROBLÈMES IDENTIFIÉS EN CAS DE MODIFICATION
