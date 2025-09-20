@@ -97,7 +97,7 @@ D'après les données existantes, actuellement les valeurs sont identiques :
 - reseau_email = reseau_direction_email
 - reseau_telephone = reseau_direction_telephone
 
-----
+---
 🎯 STRATÉGIES RECOMMANDÉES
 
 Option A - Source de vérité unique :
@@ -108,8 +108,12 @@ Option B - Synchronisation automatique :
 - Créer des triggers pour maintenir la cohérence
 - Définir un sens de priorité (direction → reseau ou reseau → direction)
 - Option C - Contrainte métier :
-----
-
+  
 Ajouter validation applicative pour éviter les divergences
 Interface utilisateur qui clarifie les rôles de chaque champ
-CONCLUSION : Actuellement, Supabase permet la divergence des données email/téléphone entre les deux tables sans synchronisation automatique.
+
+---
+CONCLUSION : 
+Actuellement, Supabase permet la divergence des données email/téléphone entre les deux tables sans synchronisation automatique.
+
+
