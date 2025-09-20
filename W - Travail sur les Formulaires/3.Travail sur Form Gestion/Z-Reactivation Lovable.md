@@ -13,21 +13,20 @@ Je vais t'expliquer dans le chat suivant ce que nous allons faire ensemble.
 
 ---
 
-Nous avons travaillé ensemble sur l'implantation du process de mon formulaire de gestion
-Et plus particulièrement sur le formulaire de gestion Réseau
-Nous avions mis en place toute une structure mais il s'est avéré qu'elle etait erronée
-Je suis donc en train de travailler sur un nouveau process en réécrivant tous les codes, fichiers, hooks, composants, edge.
-Tout
-Avant j aimerais que tu disposes d'une connaissance parfaite de mon environnement
--> Analyse les tables dans Supabase, fonctions rls 
--> Analyse src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/TablesReferenceReseau.ts
--> 
+- Nous avons travaillé ensemble sur l'implantation du process de mon formulaire de gestion
+- Et plus particulièrement sur le formulaire de gestion Réseau
+- Nous avions mis en place toute une structure mais il s'est avéré qu'elle etait erronée
+- Je suis donc en train de travailler sur un nouveau process en réécrivant tous les codes, fichiers, hooks, composants, edge.
+- Tout
+- Avant j aimerais que tu disposes d'une connaissance parfaite de mon environnement
+- -> Analyse les tables dans Supabase, fonctions rls
+- -> src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/.v1.TablesReferenceReseau.ts
+- Quand tu auras lu ces fichiers je te donnerai d autres infos
+
+---
 
 
--> src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/0.V6-Fichiers Préparés pour Intégration.md
-Ce fichier comprend tous les fichiers que nous avions conçu en vue de la préparation du paramétrage de notre formulaire
 
-Tout était codé parfaitement
 
 Nous n avions pas voulu les mettre en place dans l application avant d avoir tous les codes complets
 Tous ces codes préparatoires etaient ou seront à copier et à appliquer selon les directives et les emplacemets prévus
