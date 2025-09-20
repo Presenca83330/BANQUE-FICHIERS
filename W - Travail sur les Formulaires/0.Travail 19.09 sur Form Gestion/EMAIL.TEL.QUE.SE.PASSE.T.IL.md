@@ -1,4 +1,3 @@
----
 Ce qui se passe dans le formulaire de CRÉATION :
 Quand tu saisis l'email et téléphone dans les champs "Email Direction" et "Téléphone Direction" (lignes 194-226), voici EXACTEMENT ce qui se passe :
 
