@@ -13,6 +13,24 @@ Je vais t'expliquer dans le chat suivant ce que nous allons faire ensemble.
 
 ---
 
+J'aimerais que tu aies une vision complète de mon application commence par lire les documents suivants : 
+- public/1. Documents Stratégiques/1. Présentation LeadGenAi.md
+- public/1. Documents Stratégiques/2. Présentation Structure LeadGenAi.md
+- public/1. Documents Stratégiques/3. Logique Organisations.md
+- public/1. Documents Stratégiques/4. Relations Business entre Tables.md
+- public/1. Documents Stratégiques/5. Relations Users Utilisateurs.md
+- public/1. Documents Stratégiques/6. Référence des Hooks Stratégiques.md
+- public/1. Documents Stratégiques/7.1. Stratégie - Gestion des informations partagées entre Réseau et Réseau Direction.md
+- public/1. Documents Stratégiques/8. Gestion du Menu Gauche.md
+- public/1. Documents Stratégiques/9. Structure - Organisation | Client_id.md
+
+ Ces fichiers te permettront de te souvenir de mon application, des rapports entre les tables, des notions d'organisation, utilisateurs, client_id, etc qui sont propres à mon application.
+
+ Je vais t'expiquer ma question dans le chat suivant.
+
+---
+
+
 - Nous avons travaillé ensemble sur l'implantation du process de mon formulaire de gestion
 - Et plus particulièrement sur le formulaire de gestion Réseau
 - Nous avions mis en place toute une structure mais il s'est avéré qu'elle etait erronée
