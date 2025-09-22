@@ -58,7 +58,10 @@ J'aimerais que tu aies une vision complète de mon application commence par lire
 - Peux tu auditer et analyser ce fichier :
 - src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/.v4.Projet.Implantation.Form.Gestion.md
 - Tiens compte des tables actuelles
-- Dis moi si tu releves des erreurs critiques, des erreurs de maping, tous les fichiers utilisés sont dans ce md
+- Tiens bien compte de ma structure actuelle (cf tous les fichier de public/1. Documents Stratégiques)
+- N'oublie pas que les edge fcntion sql ne sont pas déployées, d ailleurs aucun fichier n est déployé
+- Je veux que tu te bases uniquement sur les codes présents dans ce md et que tu me dises
+- si tu releves des erreurs critiques, des erreurs de maping, des mauvais appels, tous les fichiers utilisés sont dans ce md
 - Par contre, tu as peut être des questions pour affiner ton analyse, n hésite pas à me les poser avant
 - A toi, je suis à ta disposition
 
