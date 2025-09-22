@@ -20,7 +20,7 @@ Je vais t'expliquer dans le chat suivant ce que nous allons faire ensemble.
 - Tout
 - Avant j aimerais que tu disposes d'une connaissance parfaite de mon environnement
 - -> Analyse les tables dans Supabase, fonctions rls
-- -> src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/.v1.TablesReferenceReseau.ts
+- ->src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/.v4.TablesReferenceReseau.ts
 - Quand tu auras lu ces fichiers je te donnerai d autres infos
 
 ---
