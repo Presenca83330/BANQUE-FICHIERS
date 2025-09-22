@@ -44,7 +44,7 @@ J'aimerais que tu aies une vision complète de mon application commence par lire
 ---
 
 - Commence par lire ce fichier il y a toute ma stratégie :
-- src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/.v3.Strategie.Formulaire.Gestion.md
+- src/components/ADMIN-PRESENCA/9-CreationComptesUtilisateurs/1-Formulaires/1.Reseau/.v4.Strategie.Formulaire.Gestion.md
 - Quand tu auras lu ces fichiers je te donnerai d autres infos
 
 ---
