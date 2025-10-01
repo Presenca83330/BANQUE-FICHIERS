@@ -1,0 +1,630 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../3-Utilitaires/tabs";
+import { Upload, Download, Trash2, Eye } from 'lucide-react';
+import GraphBoutonModifier from '../../5-Graphisme/1.GraphFormulaires/5.GraphBoutonModifier';
+import { ReseauSelector } from '@/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/components/ReseauSelector';
+import { useReseauFormData } from '@/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/useReseauFormData';
+import { useReseauIntegrations } from '@/components/HOOKS-STRATEGIQUE/6.HOOKS-GestionCompteAdminPresenca/1.Reseau/hooks/useReseauIntegrations';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+
+interface Props {
+  onBack?: () => void;
+}
+
+const FormReseauGestion: React.FC<Props> = ({ onBack }) => {
+  const { toast } = useToast();
+
+  const {
+    reseaux,
+    selectedReseauId,
+    formData,
+    isLoading,
+    isSaving,
+    errors,
+    loadReseaux,
+    selectReseau,
+    updateFormField,
+    saveReseau,
+    loadReseauData,
+  } = useReseauFormData();
+
+  const {
+    brevo, setBrevo,
+    zoho, setZoho,
+    openai, setOpenAI,
+    brevoConnexionId,
+    zohoConnexionId,
+    openaiConnexionId,
+    isLoading: integLoading,
+    isSaving: integSaving,
+    loadForReseau,
+    saveIntegration,
+  } = useReseauIntegrations();
+
+  const [isEditingGeneral, setIsEditingGeneral] = useState(false);
+  const [isEditingBrevo, setIsEditingBrevo] = useState(false);
+  const [isEditingZoho, setIsEditingZoho] = useState(false);
+  const [isEditingOpenAI, setIsEditingOpenAI] = useState(false);
+  const [isEditingLogo, setIsEditingLogo] = useState(false);
+  const [isEditingDocuments, setIsEditingDocuments] = useState(false);
+
+  const logoInputRef = useRef<HTMLInputElement | null>(null);
+  const docsInputRef = useRef<HTMLInputElement | null>(null);
+  const [selectedLogo, setSelectedLogo] = useState<File | null>(null);
+  const [selectedDocs, setSelectedDocs] = useState<File[]>([]);
+
+  useEffect(() => { loadReseaux(); }, [loadReseaux]);
+  useEffect(() => { if (selectedReseauId) loadForReseau(selectedReseauId); }, [selectedReseauId, loadForReseau]);
+
+  const handleSaveGeneral = async () => {
+    if (!selectedReseauId) return;
+    const success = await saveReseau({
+      reseau_nom: formData.reseau_nom,
+      reseau_identite_commerciale: formData.reseau_identite_commerciale,
+      reseau_adresse: formData.reseau_adresse,
+      reseau_code_postal: formData.reseau_code_postal,
+      reseau_ville: formData.reseau_ville,
+      reseau_siret: formData.reseau_siret,
+      reseau_telephone: formData.reseau_telephone,
+      reseau_email: formData.reseau_email,
+    });
+    if (success) setIsEditingGeneral(false);
+  };
+
+  const handleSaveBrevo = async () => { if (!selectedReseauId) return; const ok = await saveIntegration(selectedReseauId, 'brevo'); if (ok) setIsEditingBrevo(false); };
+  const handleSaveZoho = async () => { if (!selectedReseauId) return; const ok = await saveIntegration(selectedReseauId, 'zoho'); if (ok) setIsEditingZoho(false); };
+  const handleSaveOpenAI = async () => { if (!selectedReseauId) return; const ok = await saveIntegration(selectedReseauId, 'openai'); if (ok) setIsEditingOpenAI(false); };
+
+  const reloadAll = async () => {
+    if (selectedReseauId) {
+      await loadReseauData(selectedReseauId);
+      await loadForReseau(selectedReseauId);
+      setSelectedLogo(null);
+      setSelectedDocs([]);
+    }
+  };
+
+  const uploadFile = async (type: 'logo' | 'document', file: File, reseauId: string) => {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('type', type);
+    fd.append('reseauId', reseauId);
+    const { data, error } = await supabase.functions.invoke('gestion-reseau-admin-fichiers', { body: fd });
+    if (error) throw error;
+    return (data as any)?.filePath as string;
+  };
+
+  const handleSaveLogo = async () => {
+    if (!selectedReseauId || !selectedLogo) { setIsEditingLogo(false); return; }
+    try {
+      const path = await uploadFile('logo', selectedLogo, selectedReseauId);
+      await supabase.functions.invoke('gestion-reseau-admin-update', {
+        body: { reseauId: selectedReseauId, generalData: { reseau_logo: path } },
+      });
+      toast({ title: 'Succès', description: 'Logo mis à jour' });
+      await reloadAll();
+      setIsEditingLogo(false);
+    } catch {
+      toast({ title: 'Erreur', description: "Impossible d'uploader le logo", variant: 'destructive' });
+    }
+  };
+
+  const handleSaveDocuments = async () => {
+    if (!selectedReseauId) { setIsEditingDocuments(false); return; }
+    try {
+      const paths: string[] = [];
+      for (const f of selectedDocs) {
+        paths.push(await uploadFile('document', f, selectedReseauId));
+      }
+      const next = Array.isArray(formData.reseau_ressources) ? [...formData.reseau_ressources, ...paths] : paths;
+      await supabase.functions.invoke('gestion-reseau-admin-update', {
+        body: { reseauId: selectedReseauId, generalData: { reseau_ressources: next } },
+      });
+      toast({ title: 'Succès', description: 'Documents mis à jour' });
+      await reloadAll();
+      setIsEditingDocuments(false);
+    } catch {
+      toast({ title: 'Erreur', description: "Impossible d'uploader les documents", variant: 'destructive' });
+    }
+  };
+
+  const removeStoragePath = async (path: string) => {
+    const { error } = await supabase.functions.invoke('gestion-reseau-admin-fichiers', {
+      body: { filePath: path },
+      method: 'DELETE'
+    });
+    if (error) throw error;
+  };
+
+  const handleDeleteLogo = async () => {
+    if (!selectedReseauId || !formData.reseau_logo) return;
+    try {
+      await removeStoragePath(formData.reseau_logo);
+      await supabase.functions.invoke('gestion-reseau-admin-update', {
+        body: { reseauId: selectedReseauId, generalData: { reseau_logo: null } },
+      });
+      toast({ title: 'Succès', description: 'Logo supprimé' });
+      await reloadAll();
+    } catch {
+      toast({ title: 'Erreur', description: 'Suppression logo impossible', variant: 'destructive' });
+    }
+  };
+
+  const handleDeleteDocument = async (docPath: string) => {
+    if (!selectedReseauId) return;
+    try {
+      await removeStoragePath(docPath);
+      const remaining = (formData.reseau_ressources || []).filter(p => p !== docPath);
+      await supabase.functions.invoke('gestion-reseau-admin-update', {
+        body: { reseauId: selectedReseauId, generalData: { reseau_ressources: remaining } },
+      });
+      toast({ title: 'Succès', description: 'Document supprimé' });
+      await reloadAll();
+    } catch {
+      toast({ title: 'Erreur', description: 'Suppression document impossible', variant: 'destructive' });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => { e.preventDefault(); };
+
+  return (
+    <div className="space-y-6">
+      <ReseauSelector
+        reseaux={reseaux}
+        selectedReseauId={selectedReseauId}
+        onSelect={selectReseau}
+        isLoading={isLoading}
+      />
+
+      <Tabs defaultValue="general" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="general" className="text-base font-semibold">Général</TabsTrigger>
+          <TabsTrigger value="integrations" className="text-base font-semibold">Intégrations</TabsTrigger>
+          <TabsTrigger value="fichiers" className="text-base font-semibold">Fichiers</TabsTrigger>
+        </TabsList>
+
+        <form onSubmit={handleSubmit}>
+          {/* ✅ Informations Générales */}
+          <TabsContent value="general" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <CardTitle className="text-2xl font-bold">Informations Générales</CardTitle>
+                  <GraphBoutonModifier
+                    onSave={handleSaveGeneral}
+                    onCancel={reloadAll}
+                    onEditingChange={setIsEditingGeneral}
+                    isLoading={isSaving}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="reseau_nom">Nom du Réseau</Label>
+                      <Input
+                        id="reseau_nom"
+                        value={formData.reseau_nom || ''}
+                        onChange={e => updateFormField('reseau_nom', e.target.value)}
+                        placeholder="Nom du Réseau"
+                        disabled={!isEditingGeneral}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="reseau_identite_commerciale">Identité Commerciale du Réseau</Label>
+                      <Input
+                        id="reseau_identite_commerciale"
+                        value={formData.reseau_identite_commerciale || ''}
+                        onChange={e => updateFormField('reseau_identite_commerciale', e.target.value)}
+                        placeholder="Optionnel. Si Nom Commercial différent"
+                        disabled={!isEditingGeneral}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="reseau_adresse">Adresse</Label>
+                      <Input
+                        id="reseau_adresse"
+                        value={formData.reseau_adresse || ''}
+                        onChange={e => updateFormField('reseau_adresse', e.target.value)}
+                        placeholder="Adresse. Siège Réseau"
+                        disabled={!isEditingGeneral}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="reseau_code_postal">Code Postal</Label>
+                      <Input
+                        id="reseau_code_postal"
+                        value={formData.reseau_code_postal || ''}
+                        onChange={e => updateFormField('reseau_code_postal', e.target.value)}
+                        placeholder="Code Postal. Siège Réseau"
+                        disabled={!isEditingGeneral}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="reseau_ville">Ville</Label>
+                      <Input
+                        id="reseau_ville"
+                        value={formData.reseau_ville || ''}
+                        onChange={e => updateFormField('reseau_ville', e.target.value)}
+                        placeholder="Ville. Siège Réseau"
+                        disabled={!isEditingGeneral}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="reseau_siret">Siret</Label>
+                      <Input
+                        id="reseau_siret"
+                        value={formData.reseau_siret || ''}
+                        onChange={e => updateFormField('reseau_siret', e.target.value)}
+                        placeholder="N° Siret du Réseau"
+                        disabled={!isEditingGeneral}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="reseau_telephone">Téléphone Direction</Label>
+                      <Input
+                        id="reseau_telephone"
+                        value={formData.reseau_telephone || ''}
+                        onChange={e => updateFormField('reseau_telephone', e.target.value)}
+                        placeholder="Tél. Reseau Direction"
+                        disabled={!isEditingGeneral}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="reseau_email">Email Direction</Label>
+                      <Input
+                        id="reseau_email"
+                        type="email"
+                        value={formData.reseau_email || ''}
+                        onChange={e => updateFormField('reseau_email', e.target.value)}
+                        placeholder="Email. Reseau Direction"
+                        disabled={!isEditingGeneral}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* ✅ Intégrations */}
+          <TabsContent value="integrations" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <CardTitle className="text-2xl font-bold flex items-center gap-2">Intégration Brevo</CardTitle>
+                  <GraphBoutonModifier
+                    onSave={handleSaveBrevo}
+                    onCancel={reloadAll}
+                    onEditingChange={setIsEditingBrevo}
+                    isLoading={integSaving}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="brevo_api_key">Clé API Brevo</Label>
+                    <Input
+                      id="brevo_api_key"
+                      type="password"
+                      placeholder="Renseigner. N° Clé API"
+                      value={brevo.brevo_api_key || ''}
+                      onChange={e => setBrevo({ ...brevo, brevo_api_key: e.target.value })}
+                      disabled={!isEditingBrevo}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="brevo_email_compte">Email Compte Brevo</Label>
+                    <Input
+                      id="brevo_email_compte"
+                      type="email"
+                      placeholder="Renseigner. Email associé compte Brevo"
+                      value={brevo.brevo_email_compte || ''}
+                      onChange={e => setBrevo({ ...brevo, brevo_email_compte: e.target.value })}
+                      disabled={!isEditingBrevo}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="brevo_nom_compte">Nom Compte Brevo</Label>
+                    <Input
+                      id="brevo_nom_compte"
+                      placeholder="Renseigner. Nom compte Brevo"
+                      value={brevo.brevo_nom_compte || ''}
+                      onChange={e => setBrevo({ ...brevo, brevo_nom_compte: e.target.value })}
+                      disabled={!isEditingBrevo}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <CardTitle className="text-2xl font-bold flex items-center gap-2">Intégration Zoho</CardTitle>
+                  <GraphBoutonModifier
+                    onSave={handleSaveZoho}
+                    onCancel={reloadAll}
+                    onEditingChange={setIsEditingZoho}
+                    isLoading={integSaving}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="zoho_api_key">Clé API Zoho</Label>
+                    <Input
+                      id="zoho_api_key"
+                      type="password"
+                      placeholder="Renseigner. Clé API Zoho"
+                      value={zoho.zoho_api_key || ''}
+                      onChange={e => setZoho({ ...zoho, zoho_api_key: e.target.value })}
+                      disabled={!isEditingZoho}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="zoho_email_compte">Email Compte Zoho</Label>
+                    <Input
+                      id="zoho_email_compte"
+                      type="email"
+                      placeholder="Renseigner. Email associé compte Zoho"
+                      value={zoho.zoho_email_compte || ''}
+                      onChange={e => setZoho({ ...zoho, zoho_email_compte: e.target.value })}
+                      disabled={!isEditingZoho}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="zoho_nom_compte">Nom Compte Zoho</Label>
+                    <Input
+                      id="zoho_nom_compte"
+                      placeholder="Renseigner. Nom compte Zoho"
+                      value={zoho.zoho_nom_compte || ''}
+                      onChange={e => setZoho({ ...zoho, zoho_nom_compte: e.target.value })}
+                      disabled={!isEditingZoho}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <CardTitle className="text-2xl font-bold flex items-center gap-2">Intégration OpenAI</CardTitle>
+                  <GraphBoutonModifier
+                    onSave={handleSaveOpenAI}
+                    onCancel={reloadAll}
+                    onEditingChange={setIsEditingOpenAI}
+                    isLoading={integSaving}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="openai_api_key">Clé API OpenAI</Label>
+                    <Input
+                      id="openai_api_key"
+                      type="password"
+                      placeholder="Renseigner. Clé API OpenAI"
+                      value={openai.openai_api_key || ''}
+                      onChange={e => setOpenAI({ ...openai, openai_api_key: e.target.value })}
+                      disabled={!isEditingOpenAI}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="openai_email_compte">Email Compte OpenAI</Label>
+                    <Input
+                      id="openai_email_compte"
+                      type="email"
+                      placeholder="Renseigner. Email associé compte OpenAI"
+                      value={openai.openai_email_compte || ''}
+                      onChange={e => setOpenAI({ ...openai, openai_email_compte: e.target.value })}
+                      disabled={!isEditingOpenAI}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* ✅ Fichiers - STRUCTURE 2 CARTES SÉPARÉES */}
+          <TabsContent value="fichiers" className="space-y-6">
+            {/* 🎨 CARTE 1 : Logo du Réseau */}
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <CardTitle className="text-2xl font-bold">
+                    Logo du Réseau
+                  </CardTitle>
+                  <GraphBoutonModifier
+                    onSave={handleSaveLogo}
+                    onCancel={reloadAll}
+                    onEditingChange={setIsEditingLogo}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="reseau_logo_upload">Télécharger le Logo du Réseau</Label>
+                    <div
+                      className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center cursor-pointer"
+                      onClick={() => isEditingLogo && logoInputRef.current?.click()}
+                    >
+                      <div className="space-y-2">
+                        <div className="mx-auto w-12 h-12 text-muted-foreground">
+                          <Upload className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <p className="text-sm">Cliquer pour sélectionner le logo</p>
+                          <p className="text-xs text-muted-foreground">PNG, JPG, SVG - Max 2MB</p>
+                        </div>
+                      </div>
+                    </div>
+                    <input
+                      ref={logoInputRef}
+                      id="reseau_logo_upload"
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      disabled={!isEditingLogo}
+                      onChange={e => setSelectedLogo(e.target.files?.[0] || null)}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Logo actuel</Label>
+                    <div className="border rounded-lg p-4 bg-muted/20">
+                      {formData.reseau_logo ? (
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-16 h-16 border rounded bg-white flex items-center justify-center">
+                              <Upload className="h-5 w-5 text-muted-foreground" />
+                            </div>
+                            <div>
+                              <p className="font-medium break-all">{formData.reseau_logo}</p>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              type="button"
+                              variant="destructive"
+                              size="sm"
+                              onClick={handleDeleteLogo}
+                              disabled={!isEditingLogo}
+                            >
+                              Supprimer
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-muted-foreground text-sm">Aucun logo uploadé</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 📄 CARTE 2 : Documents Institutionnels */}
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <CardTitle className="text-2xl font-bold">
+                    Documents Institutionnels
+                  </CardTitle>
+                  <GraphBoutonModifier
+                    onSave={handleSaveDocuments}
+                    onCancel={reloadAll}
+                    onEditingChange={setIsEditingDocuments}
+                  />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Télécharger les documents</Label>
+                    <div
+                      className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center cursor-pointer"
+                      onClick={() => isEditingDocuments && docsInputRef.current?.click()}
+                    >
+                      <div className="space-y-2">
+                        <div className="mx-auto w-12 h-12 text-muted-foreground">
+                          <Download className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <p className="text-sm">Cliquer pour sélectionner les documents</p>
+                          <p className="text-xs text-muted-foreground">PDF, DOC, DOCX - Max 10MB par fichier</p>
+                        </div>
+                      </div>
+                    </div>
+                    <input
+                      ref={docsInputRef}
+                      type="file"
+                      multiple
+                      accept=".pdf,.doc,.docx,.xls,.xlsx"
+                      hidden
+                      disabled={!isEditingDocuments}
+                      onChange={e => setSelectedDocs(e.target.files ? Array.from(e.target.files) : [])}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Supprimer un fichier existant</Label>
+                    <div className="border rounded-lg p-4 bg-muted/20 space-y-3">
+                      {formData.reseau_ressources && formData.reseau_ressources.length > 0 ? (
+                        <>
+                          {formData.reseau_ressources.map((p) => (
+                            <div key={p} className="flex items-center justify-between p-3 border rounded bg-white">
+                              <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 bg-blue-100 rounded flex items-center justify-center">
+                                  <Download className="h-4 w-4 text-blue-600" />
+                                </div>
+                                <div className="max-w-[60ch]">
+                                  <p className="font-medium break-all">{p}</p>
+                                </div>
+                              </div>
+                              <div className="flex gap-2">
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={async () => {
+                                    const { data } = await supabase.storage
+                                      .from('bucket-table-reseau')
+                                      .createSignedUrl(p, 60);
+                                    if (data?.signedUrl) window.open(data.signedUrl, '_blank');
+                                  }}
+                                >
+                                  <Eye className="h-4 w-4 mr-1" />
+                                  Voir
+                                </Button>
+                                <Button
+                                  type="button"
+                                  variant="destructive"
+                                  size="sm"
+                                  onClick={() => handleDeleteDocument(p)}
+                                  disabled={!isEditingDocuments}
+                                >
+                                  <Trash2 className="h-4 w-4 mr-1" />
+                                  Supprimer
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </>
+                      ) : (
+                        <span className="text-muted-foreground text-sm">Aucun document uploadé</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </form>
+      </Tabs>
+
+      {onBack && (
+        <div className="pt-6">
+          <Button type="button" variant="outline" onClick={onBack}>
+            ← Retour
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default FormReseauGestion;
