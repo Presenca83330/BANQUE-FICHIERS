@@ -1,0 +1,19 @@
+project_id = "ksymahfrtvhnbeobsspt"
+
+[functions.notifier-nouvelle-demande]
+verify_jwt = false
+
+[functions.create-reseau-admin]
+verify_jwt = false
+
+[functions.gestion-reseau-admin]
+verify_jwt = false
+
+[functions.gestion-reseau-admin-donnees]
+verify_jwt = false
+
+[functions.gestion-reseau-admin-update]
+verify_jwt = false
+
+[functions.gestion-reseau-admin-fichiers]
+verify_jwt = false
