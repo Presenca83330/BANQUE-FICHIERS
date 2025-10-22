@@ -242,12 +242,12 @@ const FormAgenceIndependanteGestion: React.FC<Props> = ({ onBack }) => {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="reseau_telephone">Téléphone Agence Indépendante</Label>
+                      <Label htmlFor="reseau_telephone">Téléphone Responsable Agence Indépendante</Label>
                       <Input
                         id="reseau_telephone"
                         value={formData.reseau_telephone || ''}
                         onChange={e => updateFormField('reseau_telephone', e.target.value)}
-                        placeholder="Tél. Agence Indépendante"
+                        placeholder="Tél. Responsable Agence Indépendante"
                         disabled={!isEditingGeneral}
                       />
                     </div>
@@ -454,7 +454,7 @@ const FormAgenceIndependanteGestion: React.FC<Props> = ({ onBack }) => {
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
-                  <CardTitle className="text-2xl font-bold flex items-center gap-2">Connexion LinkedIn</CardTitle>
+                  <CardTitle className="text-2xl font-bold flex items-center gap-2">Intégration LinkedIn</CardTitle>
                   <GraphBoutonModifier
                     onSave={handleSaveLinkedin}
                     onCancel={reloadAll}
@@ -466,11 +466,11 @@ const FormAgenceIndependanteGestion: React.FC<Props> = ({ onBack }) => {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="linkedin_connexion_key">Mot de passe LinkedIn</Label>
+                    <Label htmlFor="linkedin_connexion_key">Clé Connexion LinkedIn</Label>
                     <Input
                       id="linkedin_connexion_key"
                       type="password"
-                      placeholder="Renseigner. Mot de passe LinkedIn"
+                      placeholder="Renseigner. Clé Connexion LinkedIn"
                       value={linkedin.linkedin_connexion_key || ''}
                       onChange={e => setLinkedin({ ...linkedin, linkedin_connexion_key: e.target.value })}
                       disabled={!isEditingLinkedin}
@@ -494,7 +494,7 @@ const FormAgenceIndependanteGestion: React.FC<Props> = ({ onBack }) => {
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
-                  <CardTitle className="text-2xl font-bold flex items-center gap-2">Connexion Facebook</CardTitle>
+                  <CardTitle className="text-2xl font-bold flex items-center gap-2">Intégration Facebook</CardTitle>
                   <GraphBoutonModifier
                     onSave={handleSaveFacebook}
                     onCancel={reloadAll}
@@ -506,11 +506,11 @@ const FormAgenceIndependanteGestion: React.FC<Props> = ({ onBack }) => {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="facebook_connexion_key">Mot de passe Facebook</Label>
+                    <Label htmlFor="facebook_connexion_key">Clé Connexion Facebook</Label>
                     <Input
                       id="facebook_connexion_key"
                       type="password"
-                      placeholder="Renseigner. Mot de passe Facebook"
+                      placeholder="Renseigner. Clé Connexion Facebook"
                       value={facebook.facebook_connexion_key || ''}
                       onChange={e => setFacebook({ ...facebook, facebook_connexion_key: e.target.value })}
                       disabled={!isEditingFacebook}
@@ -534,7 +534,7 @@ const FormAgenceIndependanteGestion: React.FC<Props> = ({ onBack }) => {
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
-                  <CardTitle className="text-2xl font-bold flex items-center gap-2">Connexion Instagram</CardTitle>
+                  <CardTitle className="text-2xl font-bold flex items-center gap-2">Intégration Instagram</CardTitle>
                   <GraphBoutonModifier
                     onSave={handleSaveInstagram}
                     onCancel={reloadAll}
@@ -546,11 +546,11 @@ const FormAgenceIndependanteGestion: React.FC<Props> = ({ onBack }) => {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="instagram_connexion_key">Mot de passe Instagram</Label>
+                    <Label htmlFor="instagram_connexion_key">Clé Connexion Instagram</Label>
                     <Input
                       id="instagram_connexion_key"
                       type="password"
-                      placeholder="Renseigner. Mot de passe Instagram"
+                      placeholder="Renseigner. Clé Connexion Instagram"
                       value={instagram.instagram_connexion_key || ''}
                       onChange={e => setInstagram({ ...instagram, instagram_connexion_key: e.target.value })}
                       disabled={!isEditingInstagram}
@@ -572,106 +572,173 @@ const FormAgenceIndependanteGestion: React.FC<Props> = ({ onBack }) => {
             </Card>
           </TabsContent>
 
-          {/* Fichiers */}
+          {/* ✅ Fichiers - GRAPHISME CORRIGÉ (IDENTIQUE À FormReseauGestion) */}
           <TabsContent value="fichiers" className="space-y-6">
+            {/* 🎨 Logo de l'Agence Indépendante */}
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
-                  <CardTitle className="text-2xl font-bold">Logo</CardTitle>
+                  <CardTitle className="text-2xl font-bold">Logo de l'Agence Indépendante</CardTitle>
                   <GraphBoutonModifier
                     onSave={handleSaveLogo}
-                    onCancel={() => setIsEditingLogo(false)}
+                    onCancel={reloadAll}
                     onEditingChange={setIsEditingLogo}
-                    isLoading={false}
                   />
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <input
-                    type="file"
-                    ref={logoInputRef}
-                    className="hidden"
-                    accept="image/*"
-                    onChange={(e) => setSelectedLogo(e.target.files?.[0] || null)}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => logoInputRef.current?.click()}
-                    disabled={!isEditingLogo}
-                  >
-                    <Upload className="h-4 w-4 mr-2" />
-                    Choisir un logo
-                  </Button>
-                  {selectedLogo && <p className="text-sm text-muted-foreground">{selectedLogo.name}</p>}
-                  {formData.reseau_logo && (
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">Logo actuel</span>
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        size="sm"
-                        onClick={handleDeleteLogo}
-                        disabled={!isEditingLogo}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                  <div className="space-y-2">
+                    <Label htmlFor="reseau_logo_upload">Télécharger le Logo de l'Agence Indépendante</Label>
+                    <div
+                      className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center cursor-pointer"
+                      onClick={() => isEditingLogo && logoInputRef.current?.click()}
+                    >
+                      <div className="space-y-2">
+                        <div className="mx-auto w-12 h-12 text-muted-foreground">
+                          <Upload className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <p className="text-sm">Cliquer pour sélectionner le logo</p>
+                          <p className="text-xs text-muted-foreground">PNG, JPG, SVG - Max 2MB</p>
+                        </div>
+                      </div>
                     </div>
-                  )}
+                    <input
+                      ref={logoInputRef}
+                      id="reseau_logo_upload"
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      disabled={!isEditingLogo}
+                      onChange={e => setSelectedLogo(e.target.files?.[0] || null)}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Logo actuel</Label>
+                    <div className="border rounded-lg p-4 bg-muted/20">
+                      {formData.reseau_logo ? (
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-16 h-16 border rounded bg-white flex items-center justify-center">
+                              <Upload className="h-5 w-5 text-muted-foreground" />
+                            </div>
+                            <div>
+                              <p className="font-medium break-all">{formData.reseau_logo}</p>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              type="button"
+                              variant="destructive"
+                              size="sm"
+                              onClick={handleDeleteLogo}
+                              disabled={!isEditingLogo}
+                            >
+                              Supprimer
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-muted-foreground text-sm">Aucun logo uploadé</span>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
+            {/* 📄 Documents Institutionnels */}
             <Card>
               <CardHeader>
                 <div className="flex justify-between items-center">
-                  <CardTitle className="text-2xl font-bold">Documents</CardTitle>
+                  <CardTitle className="text-2xl font-bold">Documents Institutionnels</CardTitle>
                   <GraphBoutonModifier
                     onSave={handleSaveDocuments}
-                    onCancel={() => setIsEditingDocuments(false)}
+                    onCancel={reloadAll}
                     onEditingChange={setIsEditingDocuments}
-                    isLoading={false}
                   />
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <input
-                    type="file"
-                    ref={docsInputRef}
-                    className="hidden"
-                    multiple
-                    onChange={(e) => setSelectedDocs(Array.from(e.target.files || []))}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => docsInputRef.current?.click()}
-                    disabled={!isEditingDocuments}
-                  >
-                    <Upload className="h-4 w-4 mr-2" />
-                    Ajouter des documents
-                  </Button>
-                  {selectedDocs.length > 0 && (
-                    <div className="text-sm text-muted-foreground">
-                      {selectedDocs.length} fichier(s) sélectionné(s)
+                  <div className="space-y-2">
+                    <Label>Télécharger les documents</Label>
+                    <div
+                      className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center cursor-pointer"
+                      onClick={() => isEditingDocuments && docsInputRef.current?.click()}
+                    >
+                      <div className="space-y-2">
+                        <div className="mx-auto w-12 h-12 text-muted-foreground">
+                          <Download className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <p className="text-sm">Cliquer pour sélectionner les documents</p>
+                          <p className="text-xs text-muted-foreground">PDF, DOC, DOCX - Max 10MB par fichier</p>
+                        </div>
+                      </div>
                     </div>
-                  )}
-                  {formData.reseau_ressources?.map((doc, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <span className="text-sm">{doc}</span>
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => handleDeleteDocument(doc)}
-                        disabled={!isEditingDocuments}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                    <input
+                      ref={docsInputRef}
+                      type="file"
+                      multiple
+                      accept=".pdf,.doc,.docx,.xls,.xlsx"
+                      hidden
+                      disabled={!isEditingDocuments}
+                      onChange={e => setSelectedDocs(e.target.files ? Array.from(e.target.files) : [])}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Supprimer un fichier existant</Label>
+                    <div className="border rounded-lg p-4 bg-muted/20 space-y-3">
+                      {formData.reseau_ressources && formData.reseau_ressources.length > 0 ? (
+                        <>
+                          {formData.reseau_ressources.map((p) => (
+                            <div key={p} className="flex items-center justify-between p-3 border rounded bg-white">
+                              <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 bg-blue-100 rounded flex items-center justify-center">
+                                  <Download className="h-4 w-4 text-blue-600" />
+                                </div>
+                                <div className="max-w-[60ch]">
+                                  <p className="font-medium break-all">{p}</p>
+                                </div>
+                              </div>
+                              <div className="flex gap-2">
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={async () => {
+                                    const { data } = await supabase.storage
+                                      .from('bucket-table-agence-independante')
+                                      .createSignedUrl(p, 60);
+                                    if (data?.signedUrl) window.open(data.signedUrl, '_blank');
+                                  }}
+                                >
+                                  <Eye className="h-4 w-4 mr-1" />
+                                  Voir
+                                </Button>
+                                <Button
+                                  type="button"
+                                  variant="destructive"
+                                  size="sm"
+                                  onClick={() => handleDeleteDocument(p)}
+                                  disabled={!isEditingDocuments}
+                                >
+                                  <Trash2 className="h-4 w-4 mr-1" />
+                                  Supprimer
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </>
+                      ) : (
+                        <span className="text-muted-foreground text-sm">Aucun document uploadé</span>
+                      )}
                     </div>
-                  ))}
+                  </div>
                 </div>
               </CardContent>
             </Card>
